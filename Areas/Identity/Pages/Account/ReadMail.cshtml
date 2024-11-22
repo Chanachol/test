@@ -1,0 +1,236 @@
+﻿@page
+@model ReadMailModel
+@{
+    ViewData["Title"] = "Read Mail";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        
+        body {
+            margin: 0;
+            background-color: #121212;
+            font-family: 'Roboto', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        
+        .header {
+            height: 68px;
+            background-color: #2e2e2e;
+            box-shadow: 2px -2px 10px rgba(3, 3, 3, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #ffffff;
+        }
+
+        
+        .sidebar {
+            width: 256px;
+            background-color: #1e1e1e;
+            padding: 16px;
+            box-sizing: border-box;
+            height: 900px;
+        }   
+
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        
+        .main-layout {
+            display: flex;
+            flex: 1;
+        }
+
+       
+        .email-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2e2e2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .email-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .text-large {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 1px;
+        }
+
+        .text-small {
+            font-size: 14px;
+        }
+
+        .text-muted {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        .file-attached {
+            font-size: 12px;
+            color: limegreen;
+            margin-top: 4px;
+        }
+
+        .read-status {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #ff784b;
+        }
+
+            .read-status.read {
+                color: limegreen; 
+            }
+
+
+        .button {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff784b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .button:hover {
+                background-color: #ff2d00;
+            }
+
+        .buttonD {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff522d;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .buttonD:hover {
+                background-color: #ff461e;
+            }
+
+
+        .download-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 9999px;
+            font-size:12px;
+            border: 0;
+        }
+
+            .download-button:hover {
+                background-color: #45a049;
+            }
+
+        .email-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #2e2e2e;
+            padding: 25px;
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white;
+            width: 1000px;
+            margin-left: 0px;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div class="header">
+        <a class="nav-link text-light" style="font-weight: bold; font-size: 1.5rem;">@User.Identity?.Name 🙍🏻‍♂️</a>
+        <a href="/Identity/Account/Login" class="button">Logout</a>
+    </div>
+
+    
+    <div class="main-layout">
+        
+        <div class="sidebar">
+            <div class="text-large" style="margin-top: 16px;">Quick Actions</div>
+            <a href="/Identity/Account/Home" class="button" style="display: block; margin-bottom: 8px;">Inbox 📥</a>
+            <a href="/Identity/Account/Sent" class="button" style="display: block; margin-bottom: 8px;">Sent mail 📤</a>
+            <a href="/Identity/Account/SendEmail" class="button" style="display: block; margin-bottom: 8px;">Compose ✍</a>
+        </div>
+
+       
+        <div class="content">
+            <div class="email-container">
+                <a href="/Identity/Account/Home" class="button">Back to Inbox</a><br><br>
+                
+                <h1>@Model.Email.EmailSubject</h1>
+                <p><strong>From:</strong> @Model.Email.EmailSender</p>
+                <p><strong>To:</strong> @Model.Email.EmailReceiver</p>
+                <p><strong>Date:</strong> @Model.Email.EmailDate</p><br>
+                <p>@Model.Email.EmailMessage</p><br>
+
+                @if (!string.IsNullOrEmpty(Model.Email.AttachmentPath))
+                {
+                    <form method="post" asp-page-handler="Download">
+                        <input type="hidden" name="filePath" value="@Model.Email.AttachmentPath" />
+                        <button type="submit" class="download-button">📎 Download Attachment 📥</button>
+                    </form>
+                }
+                else
+                {
+                    <p></p>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

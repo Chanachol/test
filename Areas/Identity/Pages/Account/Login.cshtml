@@ -1,0 +1,119 @@
+﻿@page
+@model FinalProject.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Login</title>
+    <style>
+
+        .card {
+            width: 400px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0px 0px 9px rgba(3, 3, 3, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 100px auto;
+        }
+
+
+        .text {
+            color: #ffffff;
+            font-size: 24px;
+            font-family: 'Palanquin', sans-serif;
+            font-weight: 700;
+            line-height: 32px;
+            margin-bottom: 20px;
+        }
+
+
+        .input {
+            width: 336px;
+            height: 50px;
+            padding: 0px 20px;
+            margin-bottom: 10px;
+            border: 1px solid #4a4a4a;
+            border-radius: 9999px;
+            background-color: #2e2e2e;
+            color: #94a3b8;
+            font-size: 16px;
+            line-height: 50px;
+            outline: none;
+        }
+
+
+        .button {
+            cursor: pointer;
+            width: 336px;
+            height: 44px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff784b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 20px;
+            margin-top: 20px;
+        }
+
+ 
+        .error-message {
+            color: #ff784b;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="text">Login</div>
+
+
+        <form method="post">
+            <input asp-for="Input.UserName" class="input" placeholder="Username" required />
+            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+
+            <input asp-for="Input.Password" class="input" placeholder="Password" type="password" required />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage) || ModelState[""]?.Errors?.Count > 0)
+            {
+                <div class="error-message">
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        @Model.ErrorMessage
+                    }
+                    else
+                    {
+                        @foreach (var error in ModelState[""].Errors)
+                        {
+                            <div>@error.ErrorMessage</div>
+                        }
+                    }
+                </div>
+            }
+
+
+            <button id="login-submit" class="button" type="submit">Login</button>
+        </form>
+
+        <div>
+            <a style="color:#ffffff;">Don't have an account yet? </a>
+            <a href="/Identity/Account/Register" style="color: #ff784b;">Create Account</a>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+﻿@page
+@model HomeModel
+@{
+    ViewData["Title"] = "EmailButByUs! IDKJ";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        
+        body {
+            margin: 0;
+            background-color: #121212;
+            font-family: 'Roboto', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+       
+        .header {
+            height: 68px;
+            background-color: #2e2e2e;
+            box-shadow: 2px -2px 10px rgba(3, 3, 3, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #ffffff;
+        }
+
+       
+        .sidebar {
+            width: 256px;
+            background-color: #1e1e1e;
+            padding: 16px;
+            box-sizing: border-box;
+            height:900px;
+        }
+
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        
+        .main-layout {
+            display: flex;
+            flex: 1;
+        }
+
+        
+        .email-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2e2e2e;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            position: relative;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            overflow: hidden;
+        }
+
+        .email-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .text-large {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 1px;
+        }
+
+        .text-small {
+            font-size: 14px;
+        }
+
+        .text-muted {
+            font-size: 12px;
+            color: #b0b0b0;
+        }
+
+        .file-attached {
+            font-size: 12px;
+            color: limegreen;
+            margin-top: 4px;
+        }
+
+        .read-status {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #ff784b; 
+        }
+
+            .read-status.read {
+                color: limegreen;
+            }
+
+        
+        .button {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff784b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .button:hover {
+                background-color: #ff2d00;
+            }
+
+        .buttonD {
+            position: absolute;
+            top: -1px;
+            right: -3px;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff522d;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .buttonD:hover {
+                background-color: #ff461e;
+            }
+
+        .buttonM {
+            position: absolute;
+            top: 113px;
+            right: -3px;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff6443;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .buttonM:hover {
+                background-color: #ff532e;
+            }
+
+        .buttonR {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff784b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 25px;
+            margin-top: -18px;
+        }
+
+            .buttonR:hover {
+                background-color: #ff2d00;
+            }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); 
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+       
+        .modal-content {
+            background-color: #2e2e2e;
+            color: #fff;
+            padding: 20px 40px;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease-in-out; 
+        }
+
+            .modal-content h2 {
+                font-size: 24px;
+                margin-bottom: 16px;
+                color: #ff784b;
+            }
+
+            
+            .modal-content p {
+                font-size: 16px;
+                margin-bottom: 20px;
+                color: #ccc;
+            }
+
+      
+        .modal-btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .confirm-btn {
+            background-color: #ff522d;
+            color: #fff;
+        }
+
+            .confirm-btn:hover {
+                background-color: #ff2d00;
+            }
+
+        .cancel-btn {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+            .cancel-btn:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+   
+    <div class="header">
+        <a class="nav-link text-light" style="font-weight: bold; font-size: 1.5rem;">@User.Identity?.Name 🙍🏻‍♂️</a>
+        <a href="/Identity/Account/Login" class="button">Logout</a>
+    </div>
+
+ 
+    <div class="main-layout">
+        
+        <div class="sidebar">
+            <div class="text-large" style="margin-top: 16px;">Quick Actions</div>
+            <a href="/Identity/Account/Sent" class="button" style="display: block; margin-bottom: 8px;">Sent mail 📤</a>
+            <a href="/Identity/Account/SendEmail" class="button" style="display: block; margin-bottom: 8px;">Compose ✍</a>
+            
+            
+        </div>
+
+       
+        <div class="content">
+            <div class="text-large">Recent Emails</div>
+
+     
+            @if (Model.Emails != null && Model.Emails.Any())
+            {
+                @foreach (var email in Model.Emails)
+                {
+                    <div class="email-card">
+                        <form method="post" asp-page-handler="Delete" asp-route-emailId="@email.EmailID">
+                            <button type="button" class="buttonD" onclick="showDeleteConfirmation('@email.EmailID')">x</button>
+
+                        </form>
+
+                        <div class="email-info">
+                            <div class="text-muted">Date: @email.EmailDate</div>
+                            <div class="text-large">@email.EmailSubject</div>
+                            <div class="text-small">@email.EmailSender</div><br>
+                            <div class="text-muted">Message: @email.EmailMessage</div>
+
+
+                            @if (!string.IsNullOrEmpty(email.AttachmentPath))
+                            {
+                                <div class="file-attached">File Attached</div>
+                            }
+
+
+                        </div>
+                    </div>
+                    <a href="/Identity/Account/ReadMail?emailId=@email.EmailID&markAsRead=true" class="buttonR">Read the mail</a>
+
+                }
+            }
+            else
+            {
+                <p class="text-muted">No recent emails found!</p>
+            }
+        </div>
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h2>🗑️ Confirm Deletion</h2>
+                <p>This action is irreversible. Are you sure you want to delete this email?</p>
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="emailIdToDelete" name="emailId" />
+                    <button type="submit" class="modal-btn confirm-btn">Yes, Delete</button>
+                    <button type="button" class="modal-btn cancel-btn" onclick="hideDeleteConfirmation()">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function showDeleteConfirmation(emailId) {
+                console.log("Delete confirmation triggered for Email ID:", emailId); 
+                const modal = document.getElementById('deleteModal');
+                const emailIdInput = document.getElementById('emailIdToDelete');
+                emailIdInput.value = emailId;
+                modal.style.display = 'flex'; 
+            }
+
+            function hideDeleteConfirmation() {
+                const modal = document.getElementById('deleteModal');
+                modal.style.display = 'none';
+            }
+
+            window.onclick = function (event) {
+                const modal = document.getElementById('deleteModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none'; 
+                }
+            };
+        </script>
+
+
+    </div>
+</body>
+</html>

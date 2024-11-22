@@ -1,0 +1,158 @@
+﻿@page
+@model FinalProject.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - SecureApp</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0e0e0e;
+            color: #ffffff;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 80vh;
+            padding: 80px;
+        }
+
+        .form-card {
+            background-color: #1f1f1f;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+            .form-card h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                font-size: 1.5rem;
+            }
+
+            .form-card form {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                justify-content: space-between;
+            }
+
+                .form-card form input {
+                    background-color: #2e2e2e;
+                    border: none;
+                    border-radius: 20px;
+                    padding: 12px 20px;
+                    margin-bottom: 15px;
+                    color: #94a3b8;
+                    font-size: 1rem;
+                    outline: none;
+                }
+
+                    .form-card form input:focus {
+                        outline: 1px solid #ff784b;
+                    }
+
+                .form-card form button {
+                    background-color: #ff784b;
+                    color: #ffffff;
+                    border: none;
+                    padding: 12px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    margin-top: 10px;
+                }
+
+                    .form-card form button:hover {
+                        background-color: #ff6a3d;
+                    }
+
+        .text-danger {
+            display: block;
+            margin-bottom: 5px;
+            margin-top: -5px;
+            color: #ff6a3d;
+            font-size: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .form-card p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #aaaaaa;
+        }
+
+            .form-card p a {
+                color: #ff784b;
+                text-decoration: none;
+            }
+
+                .form-card p a:hover {
+                    text-decoration: underline;
+                }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #1f1f1f;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-card">
+            <h1>Create an Account</h1>
+
+            @if (!string.IsNullOrEmpty(ViewData.ModelState[""]?.Errors.FirstOrDefault()?.ErrorMessage))
+            {
+                <div class="text-danger">
+                    @ViewData.ModelState[""]?.Errors.FirstOrDefault()?.ErrorMessage
+                </div>
+            }
+
+            <form method="post">
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                <input asp-for="Input.FirstName" placeholder="First Name" />
+
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                <input asp-for="Input.LastName" placeholder="Last Name" />
+
+                <span asp-validation-for="Input.MobilePhone" class="text-danger"></span>
+                <input asp-for="Input.MobilePhone" placeholder="Phone Number" />
+
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <input asp-for="Input.UserName" placeholder="Email" type="email" />
+
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <input asp-for="Input.Password" type="password" placeholder="Password" />
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p>By registering, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</p>
+            <p>Already have an account? <a href="/Identity/Account/Login">Go login now!</a>.</p>
+        </div>
+    </div>
+
+</body>
+</html>

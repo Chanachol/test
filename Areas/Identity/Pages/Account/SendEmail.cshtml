@@ -1,0 +1,167 @@
+﻿@page
+@model SendEmailModel
+@{
+    ViewData["Title"] = "Let's Send!";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        
+        body {
+            margin: 0;
+            background-color: #121212;
+            font-family: 'Roboto', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        
+        .header {
+            height: 68px;
+            background-color: #2e2e2e;
+            box-shadow: 2px -2px 10px rgba(3, 3, 3, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #ffffff;
+        }
+
+       
+        .sidebar {
+            width: 256px;
+            background-color: #1e1e1e;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            height: 80%;
+            max-width: 800px;
+            margin-top: -150px;
+            margin-left: 300px;
+        }
+
+        
+        .form-card {
+            background-color: #2e2e2e;
+            border-radius: 12px;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .text-large {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 1px;
+        }
+
+       
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+            input:focus, textarea:focus {
+                outline: 1px solid #ff784b;
+            }
+
+        
+        .button {
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 0;
+            border-radius: 9999px;
+            background-color: #ff784b;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .button:hover {
+                background-color: #ff2d00;
+            }
+
+        .text-success {
+            color: limegreen;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .text-danger {
+            color: #ff6a3d;
+            font-size: 0.85rem;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="header">
+        <a class="nav-link text-light" style="font-weight: bold; font-size: 1.5rem;">@User.Identity?.Name 🙍🏻‍♂️</a>
+        <a href="/Identity/Account/Login" class="button" style="display: block; margin-bottom: 32px;">Logout</a>
+    </div>
+
+    
+    <div class="main-layout">
+        
+        <div class="sidebar">
+            <div class="text-large" style="margin-top: 16px;">Quick Actions</div>
+            <a href="/Identity/Account/Home" class="button" style="display: block; margin-bottom: 8px;">My Inbox 📬</a>
+            <a href="/Identity/Account/Sent" class="button" style="display: block; margin-bottom: 8px;">Sent mail 📤</a>
+        </div>
+
+        
+        <div class="content">
+            <h1 class="text-large">Let's send a mail!</h1>
+            @if (!string.IsNullOrEmpty(Model.StatusMessage))
+            {
+                <p class="text-success">@Model.StatusMessage</p>
+            }
+            <div class="form-card">
+                <form method="post" enctype="multipart/form-data">
+                    <label for="EmailReceiver">Recipient Email</label>
+                    <input type="email" id="EmailReceiver" name="EmailReceiver" asp-for="EmailReceiver" required />
+                    <span asp-validation-for="EmailReceiver" class="text-danger"></span>
+
+                    <label for="EmailSubject">Subject</label>
+                    <input type="text" id="EmailSubject" name="EmailSubject" asp-for="EmailSubject" required />
+                    <span asp-validation-for="EmailSubject" class="text-danger"></span>
+
+                    <label for="EmailMessage">Message</label>
+                    <textarea id="EmailMessage" name="EmailMessage" asp-for="EmailMessage" rows="5" required></textarea>
+                    <span asp-validation-for="EmailMessage" class="text-danger"></span>
+
+                    <label for="EmailAttachment">Attachment (Optional)</label>
+                    <input type="file" id="EmailAttachment" name="EmailAttachment" asp-for="EmailAttachment" />
+                    <span asp-validation-for="EmailAttachment" class="text-danger"></span>
+
+                    <button type="submit" class="button">Send</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

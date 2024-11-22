@@ -1,0 +1,62 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "IDKJ :)";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .big-text {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .sub-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .home-button {
+            background-color: #ff784b;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .home-button:hover {
+            background-color: #ff5722;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="big-text">Welcome to IDKJ's finals project</div>
+        <div class="sub-text">There're nothing here! click button below to continue</div>
+        <a href="/Identity/Account/Login" class="home-button">Continue</a>
+    </div>
+</body>
+</html>
